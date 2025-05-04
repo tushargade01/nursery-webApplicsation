@@ -23,8 +23,8 @@ const addProduct = async (req, res) => {
             })
         );
 
-        // console.log(name, description, price, category, subCategory, bestSeller);
-        // console.log(imagesUrl);
+        console.log(name, description, price, category, subCategory, bestSeller);
+        console.log(imagesUrl);
        
 
         const productData = {
