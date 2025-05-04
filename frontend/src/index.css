@@ -1,0 +1,14 @@
+@import "tailwindcss";
+*{
+    font-family: system-ui;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+
+@media (max-width:640px){
+    a.active{
+        background-color: rgb(54, 54, 54);
+        color: white;
+    }
+}
