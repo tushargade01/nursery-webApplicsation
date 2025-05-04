@@ -68,6 +68,7 @@ const PlaceORder = () => {
             setCartItems({})
             navigate('/orders')
           } else {
+            
             toast.error(response.data.message)
           }
           break;
