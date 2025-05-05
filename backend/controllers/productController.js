@@ -14,13 +14,20 @@ const addProduct = async (req, res) => {
 
         const imagesUrl = await Promise.all(
             images.map(async (item) => {
-                if (!item?.path) throw new Error("Image path is missing.");
-                const result = await cloudinary.uploader.upload(item.path, {
-                    resource_type: 'image'
+              const result = await cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+                if (error) throw error;
+                return result;
+              });
+          
+              return new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream((error, result) => {
+                  if (error) return reject(error);
+                  resolve(result.secure_url);
                 });
-                return result.secure_url;
+                stream.end(item.buffer);
+              });
             })
-        );
+          );          
 
         const productData = {
             name,
