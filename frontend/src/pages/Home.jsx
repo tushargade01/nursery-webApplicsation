@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className='w-full'>
       <Hero/>
-      <div className='sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+      <div className='px-[4vw] sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
           <LatestCollection/>
           <BestSeller/>
           <OurPolicy/>

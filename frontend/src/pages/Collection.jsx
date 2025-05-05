@@ -73,7 +73,7 @@ const Collection = () => {
   return (
     <>
     <SearchBar/>
-    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t px-[4vw] sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
       {/* filter option */}
       <div className='min-w-60'>
         <p onClick={()=>setShowFilter(!showFilter)} className='my-2 text-xl flex items-center cursor-pointer gap-2'>FILTERS
