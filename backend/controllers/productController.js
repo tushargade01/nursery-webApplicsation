@@ -1,14 +1,13 @@
-import {v2 as cloudinary} from 'cloudinary'
-import productModel from "../models/productModel.js"
+import { v2 as cloudinary } from 'cloudinary';
+import productModel from "../models/productModel.js";
 
-
-//fucntion for add products
+// Function to add products
 const addProduct = async (req, res) => {
     try {
         const { name, description, price, category, subCategory, bestSeller } = req.body;
 
-        const image1 = req.file;
-
+        // Get uploaded file from req.files (not req.file when using upload.fields)
+        const image1 = req.files?.image1?.[0];
 
         const images = [];
         if (image1) images.push(image1);
@@ -23,69 +22,56 @@ const addProduct = async (req, res) => {
             })
         );
 
-        console.log(name, description, price, category, subCategory, bestSeller);
-        console.log(imagesUrl);
-       
-
         const productData = {
             name,
             description,
             category,
-            price:Number(price),
+            price: Number(price),
             subCategory,
-            bestSeller: bestSeller === "true"? true : false,
+            bestSeller: bestSeller === "true",
             image: imagesUrl,
             date: Date.now()
-        }
+        };
 
-        console.log(productData)
-        
         const product = new productModel(productData);
-        await product.save()
+        await product.save();
 
-        res.json({success:true,message:"Product added"})
+        res.json({ success: true, message: "Product added" });
 
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
 };
 
-
-//fucntion for list products
-const listProducts = async (req,res)=>{
+// Function to list products
+const listProducts = async (req, res) => {
     try {
         const products = await productModel.find({});
-        res.json({success:true,products})
-        
+        res.json({ success: true, products });
     } catch (error) {
-        console.log(error);
-        res.json({success:false,message:error.message})
-        
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
-//fucntion for remove products
-const removeProduct = async (req,res)=>{
+// Function to remove a product
+const removeProduct = async (req, res) => {
     try {
-        await productModel.findByIdAndDelete(req.body.id)
-        res.json({success:true,message:"product deleted"})
+        await productModel.findByIdAndDelete(req.body.id);
+        res.json({ success: true, message: "Product deleted" });
     } catch (error) {
-        console.log(error);
-        res.json({success:false,message:error.message})
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
-//fucntion for single product info
-const singleProduct = async (req,res)=>{
+// Function to get a single product's info
+const singleProduct = async (req, res) => {
     try {
-        const {productId} = req.body
-        const product = await productModel.findById(productId)
-        res.json({success:true,product})
-
+        const { productId } = req.body;
+        const product = await productModel.findById(productId);
+        res.json({ success: true, product });
     } catch (error) {
-        console.log(error);
-        res.json({success:false,message:error.message})
+        res.json({ success: false, message: error.message });
     }
-}
+};
 
-export {listProducts, addProduct, removeProduct, singleProduct} 
+export { listProducts, addProduct, removeProduct, singleProduct };
